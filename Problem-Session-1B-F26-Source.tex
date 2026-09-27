@@ -269,6 +269,30 @@ Let $w$ be a string in $L$ where $|w| \geq p$. Then there exist substrings $x, y
 
 \textbf{Proof}:
 
+\begin{solution}
+\textbf{Written by:} Robert Cruz-Diaz \newline
+\newline
+Suppose for a contradiction that $L_1$ is regular. \newline
+Then $\exists$ pumping length, $p$.\newline
+Let $w$ = $c^{0p} a^{2p} b^{p}$ => $w = a^{2p} b^{p}$. $w\in L_1$ $\And$ $|w| \geq p$
+
+Then by Pumping lemma, $w = xyz$ where
+\begin{enumerate}[label=(\arabic*)]
+    \item $\forall i \space \geq 0, \space xy^iz \space \in \space L$
+    \item $|y| \space > 0$
+    \item $|xy| \space \leq p$
+\end{enumerate}
+
+Let $w' = xy^0z \space => w' =xz$.\newline
+By (3), xy contains only $a$'s since $|xy| \leq p$ and that the first $p$ symbols of w are $a$'s. By (2), $y$ contains at least one $a$.\newline
+$\therefore\ w' = xz$ has fewer than $2p$ a's $\And$ still has $p\space b$'s. Hence $w' \notin L_1$, contradicting (1). \newline
+
+\textbf{Sources:} Went to Office hours. Did not need to use any AI tools to reach this solution. 
+\end{solution}
+
+
+
+
 \pagebreak
 
 \item  Let $\Sigma = \{a, b, c\}$. Prove that the language 
