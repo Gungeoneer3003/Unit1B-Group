@@ -302,6 +302,46 @@ L = \{a^mb^n \mid m \geq 2n, n \geq 0 \}
 is not regular, using one or more closure properties of regular languages and the fact that $L_1$ from the previous problem is not regular.
 
 \emph{(Hint: you may need to use concatenation and find two additional regular languages, say $L_2$ and $L_3$.)}
+
+\begin{solution}
+\textbf{Written by:} Omar Garcia
+
+\medskip
+\begin{proof}
+Suppose for a contradiction that $L$ is regular.
+
+Let $L_1 = \{c^l a^m b^n \mid m \geq 2n,\ n \geq 1,\ l \geq 0\}$. 
+Let $L_2 = c^*$. 
+Let $L_3 = \Sigma^* b \Sigma^*$.
+
+$$L_1 = L_3 \cap (L_2 \cdot L)$$
+
+Looking at $L_1$, we see that in order to reach $L_1$, we are in need of 
+concatenating a string $c^l \in L_2$ that satisfies a form $c^l a^m b^n$. 
+By concatenating $L \cdot L_2$, we get:
+$$(L \cdot L_2) = \{c^l a^m b^n \mid m \geq 2n,\ n \geq 0,\ l \geq 0\}.$$
+In order to reach $L_1$, $n \geq 1$. Right now our string allows for $0$ 
+$b$'s, but $L_1$ says we need at least $1$ $b$. So intersecting with $L_3$ 
+gives us strings with at least $1$ $b$.
+
+Hence:
+$$L_3 \cap (L \cdot L_2) = \{c^l a^m b^n \mid m \geq 2n,\ l \geq 0,\ n \geq 1\} = L_1.$$
+
+We assumed $L$ is regular, $L_2$ is regular, and by closure under 
+concatenation, $L \cdot L_2$ is regular. $L_3$ is regular, and again by 
+closure under intersection, $L_3 \cap (L \cdot L_2)$ is regular. So $L_1$ 
+is regular.
+
+However, here we have a \textbf{contradiction}. We know from the previous 
+problem that $L_1$ is \textbf{NOT} regular. In the proof above, we claim 
+$L_1$ is regular. Thus we have a contradiction.
+
+Since assuming $L$ is regular led to $L_1$ being regular, which is false, 
+$L$ must not be regular.
+\end{proof}
+
+\textbf{Sources:} Used lecture videos on youtube. No AI needed. 
+\end{solution}
 \end{enumerate}
 
 \end{document}
