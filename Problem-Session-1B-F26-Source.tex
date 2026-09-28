@@ -254,17 +254,17 @@ Submit your solutions to Gradescope (more instructions to follow in Canvas). You
 
                   \draw
                   (q01) edge[loop above] node [above ] {a} (q01)
-                  (q013) edge[loop above] node [above ] {a} (q013)
                   (q0123) edge[loop above] node [above ] {a, b} (q0123)
 
-                  (q01) edge[style = ->] node [above] {$b$} (q013)
+                  ([yshift=5pt]q01.east) edge[style = ->] node [above] {$b$} ([yshift=5pt]q013.west)
+                  ([yshift=-5pt]q013.west) edge[style = ->] node [below] {$a$} ([yshift=-5pt]q01.east)
                   (q013) edge[style = ->] node [above] {$b$} (q0123);
 
               \end{tikzpicture}
 
               \vspace{0.5cm}
 
-              \textbf{Sources:} Two youtube videos were used for reference and as a refresher on conversions. They can be found \href{https://www.youtube.com/watch?v=jMxuL4Xzi_A}{here} and \href{https://www.youtube.com/watch?v=SCdsgVT6Ktw}{here}. No AI tools were used at any point in research, determining the solution, and writing the solution. 
+              \textbf{Sources:} Two youtube videos were used for reference and as a refresher on conversions. They can be found \href{https://www.youtube.com/watch?v=jMxuL4Xzi_A}{here} and \href{https://www.youtube.com/watch?v=SCdsgVT6Ktw}{here}. The AI agent ChatGPT was used after writing the solution for review. 
           \end{solution}
 
           \pagebreak
