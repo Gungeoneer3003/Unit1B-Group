@@ -28,14 +28,13 @@
 \usepackage{algorithm,caption}
 \usepackage[noend]{algpseudocode}
 \usepackage{fancyhdr}
-\usepackage{hyperref}
+\usepackage[colorlinks=true, urlcolor=blue, linkcolor=red]{hyperref}
 \usepackage{cleveref}
 \usepackage[shortlabels]{enumitem}
 \usepackage{version}
 \usepackage{listings, lstautogobble}
 \usepackage{tcolorbox}
 \usepackage{wrapfig}
-
 \usepackage{amsmath}
 % \usepackage[scaled]{helvet}
 % \renewcommand\familydefault{\sfdefault} 
@@ -109,239 +108,266 @@ Submit your solutions to Gradescope (more instructions to follow in Canvas). You
 
 \section{Questions}
 \begin{enumerate}
-\item Consider the procedure for converting a DFA to an equivalent regular expression, from class. 
+    \item Consider the procedure for converting a DFA to an equivalent regular expression, from class.
 
-Here is the initial machine:
+          Here is the initial machine:
 
-\begin{tikzpicture}[node distance=7em]
-    \node[state, initial] (1) {$1$};
-    \node[state, right of=1] (2) {$2$};
-    \node[state, accepting, right of=2] (3) {$3$};
-    \draw
-      (1) edge[loop above] node{0} (1)
-    (1) edge[style = ->, bend left] node [above] {1} (2)
-    (3) edge[bend right=60, style = ->] node [above] {0,1} (1)
-    (2) edge[style = ->, bend left] node [below] {0} (1)
-    (2) edge[style = ->] node [above] {1} (3)
-    ;
-\end{tikzpicture}
+          \begin{tikzpicture}[node distance=7em]
+              \node[state, initial] (1) {$1$};
+              \node[state, right of=1] (2) {$2$};
+              \node[state, accepting, right of=2] (3) {$3$};
+              \draw
+              (1) edge[loop above] node{0} (1)
+              (1) edge[style = ->, bend left] node [above] {1} (2)
+              (3) edge[bend right=60, style = ->] node [above] {0,1} (1)
+              (2) edge[style = ->, bend left] node [below] {0} (1)
+              (2) edge[style = ->] node [above] {1} (3)
+              ;
+          \end{tikzpicture}
 
-After adding a new start and accept state, the machine is as follows:
+          After adding a new start and accept state, the machine is as follows:
 
-\begin{tikzpicture}[node distance=7em]
-    \node[state, initial] (s) {$start$};
-    \node[state, right of=s] (1) {$1$};
-    \node[state, right of=1] (2) {$2$};
-    \node[state, right of=2] (3) {$3$};
-    \node[state, accepting, right of=3] (a) {$accept$};
-    \draw 
-    (s) edge[style = ->] node [above] {$\varepsilon$} (1)
-    (1) edge[loop above] node{0} (1)
-    (1) edge[style = ->, bend left] node [above] {1} (2)
-    (3) edge[bend right=60, style = ->] node [above] {0,1} (1)
-    (2) edge[style = ->, bend left] node [below] {0} (1)
-    (2) edge[style = ->] node [above] {1} (3)
-    (3) edge[style = ->] node [above] {$\varepsilon$} (a)
-    ;
-\end{tikzpicture}
-     Draw the machine that results from eliminating state 1, including the regular expression(s) appearing on each new transition. Then eliminate state 2, then state 3; then write the resulting regular expression. Also write each intermediate machine.
-     \begin{solution}
-\textbf{Written by:} Emilio Meza
+          \begin{tikzpicture}[node distance=7em]
+              \node[state, initial] (s) {$start$};
+              \node[state, right of=s] (1) {$1$};
+              \node[state, right of=1] (2) {$2$};
+              \node[state, right of=2] (3) {$3$};
+              \node[state, accepting, right of=3] (a) {$accept$};
+              \draw
+              (s) edge[style = ->] node [above] {$\varepsilon$} (1)
+              (1) edge[loop above] node{0} (1)
+              (1) edge[style = ->, bend left] node [above] {1} (2)
+              (3) edge[bend right=60, style = ->] node [above] {0,1} (1)
+              (2) edge[style = ->, bend left] node [below] {0} (1)
+              (2) edge[style = ->] node [above] {1} (3)
+              (3) edge[style = ->] node [above] {$\varepsilon$} (a)
+              ;
+          \end{tikzpicture}
+          Draw the machine that results from eliminating state 1, including the regular expression(s) appearing on each new transition. Then eliminate state 2, then state 3; then write the resulting regular expression. Also write each intermediate machine.
+          \begin{solution}
+              \textbf{Written by:} Emilio Meza
 
-\medskip
-\textbf{Step 1: Eliminate state 1.}
-State 1 has a self-loop labeled $0$, so each new transition gets $0^*$ in the middle.
-The transitions into state 1 come from $start$ (label $\varepsilon$), from $2$ (label $0$), and from $3$ (label $0 \cup 1$).
-The only transition out of state 1 goes to $2$ (label $1$). This gives:
-\begin{itemize}
-    \item $start \to 2$: $\varepsilon\,0^*1 = 0^*1$
-    \item $2 \to 2$ (new self-loop): $0\,0^*1 = 00^*1$
-    \item $3 \to 2$: $(0 \cup 1)0^*1$
-\end{itemize}
+              \medskip
+              \textbf{Step 1: Eliminate state 1.}
+              State 1 has a self-loop labeled $0$, so each new transition gets $0^*$ in the middle.
+              The transitions into state 1 come from $start$ (label $\varepsilon$), from $2$ (label $0$), and from $3$ (label $0 \cup 1$).
+              The only transition out of state 1 goes to $2$ (label $1$). This gives:
+              \begin{itemize}
+                  \item $start \to 2$: $\varepsilon\,0^*1 = 0^*1$
+                  \item $2 \to 2$ (new self-loop): $0\,0^*1 = 00^*1$
+                  \item $3 \to 2$: $(0 \cup 1)0^*1$
+              \end{itemize}
 
-\begin{center}
-\begin{tikzpicture}[node distance=7.5em, ->]
-    \node[state, initial] (s) {$start$};
-    \node[state, right of=s] (2) {$2$};
-    \node[state, right of=2] (3) {$3$};
-    \node[state, accepting, right of=3] (a) {$accept$};
-    \draw
-    (s) edge node[above] {$0^*1$} (2)
-    (2) edge[loop above] node[above] {$00^*1$} (2)
-    (2) edge[bend left] node[above] {$1$} (3)
-    (3) edge[bend left] node[below] {$(0\cup 1)0^*1$} (2)
-    (3) edge node[above] {$\varepsilon$} (a)
-    ;
-\end{tikzpicture}
-\end{center}
-\end{solution}
+              \begin{center}
+                  \begin{tikzpicture}[node distance=7.5em, ->]
+                      \node[state, initial] (s) {$start$};
+                      \node[state, right of=s] (2) {$2$};
+                      \node[state, right of=2] (3) {$3$};
+                      \node[state, accepting, right of=3] (a) {$accept$};
+                      \draw
+                      (s) edge node[above] {$0^*1$} (2)
+                      (2) edge[loop above] node[above] {$00^*1$} (2)
+                      (2) edge[bend left] node[above] {$1$} (3)
+                      (3) edge[bend left] node[below] {$(0\cup 1)0^*1$} (2)
+                      (3) edge node[above] {$\varepsilon$} (a)
+                      ;
+                  \end{tikzpicture}
+              \end{center}
+          \end{solution}
 
-\begin{solution}
-\textbf{Step 2: Eliminate state 2.}
-State 2 now has the self-loop $00^*1$, so each new transition gets $(00^*1)^*$ in the middle.
-The transitions into state 2 come from $start$ (label $0^*1$) and from $3$ (label $(0\cup1)0^*1$).
-The only transition out of state 2 goes to $3$ (label $1$). This gives:
-\begin{itemize}
-    \item $start \to 3$: $0^*1(00^*1)^*1$
-    \item $3 \to 3$ (new self-loop): $(0\cup1)0^*1(00^*1)^*1$
-\end{itemize}
+          \begin{solution}
+              \textbf{Step 2: Eliminate state 2.}
+              State 2 now has the self-loop $00^*1$, so each new transition gets $(00^*1)^*$ in the middle.
+              The transitions into state 2 come from $start$ (label $0^*1$) and from $3$ (label $(0\cup1)0^*1$).
+              The only transition out of state 2 goes to $3$ (label $1$). This gives:
+              \begin{itemize}
+                  \item $start \to 3$: $0^*1(00^*1)^*1$
+                  \item $3 \to 3$ (new self-loop): $(0\cup1)0^*1(00^*1)^*1$
+              \end{itemize}
 
-\begin{center}
-\begin{tikzpicture}[node distance=11em, ->]
-    \node[state, initial] (s) {$start$};
-    \node[state, right of=s] (3) {$3$};
-    \node[state, accepting, right of=3] (a) {$accept$};
-    \draw
-    (s) edge node[above] {$0^*1(00^*1)^*1$} (3)
-    (3) edge[loop above] node[above] {$(0\cup1)0^*1(00^*1)^*1$} (3)
-    (3) edge node[above] {$\varepsilon$} (a)
-    ;
-\end{tikzpicture}
-\end{center}
-\end{solution}
+              \begin{center}
+                  \begin{tikzpicture}[node distance=11em, ->]
+                      \node[state, initial] (s) {$start$};
+                      \node[state, right of=s] (3) {$3$};
+                      \node[state, accepting, right of=3] (a) {$accept$};
+                      \draw
+                      (s) edge node[above] {$0^*1(00^*1)^*1$} (3)
+                      (3) edge[loop above] node[above] {$(0\cup1)0^*1(00^*1)^*1$} (3)
+                      (3) edge node[above] {$\varepsilon$} (a)
+                      ;
+                  \end{tikzpicture}
+              \end{center}
+          \end{solution}
 
-\begin{solution}
-\textbf{Step 3: Eliminate state 3.}
-The only path left is $start \to 3 \to accept$, and state 3 has a self-loop.
-The new label is (label into 3)(self-loop)$^*$(label out of 3). The trailing $\varepsilon$ does not change the expression.
+          \begin{solution}
+              \textbf{Step 3: Eliminate state 3.}
+              The only path left is $start \to 3 \to accept$, and state 3 has a self-loop.
+              The new label is (label into 3)(self-loop)$^*$(label out of 3). The trailing $\varepsilon$ does not change the expression.
 
-\begin{center}
-\begin{tikzpicture}[node distance=21em, ->]
-    \node[state, initial] (s) {$start$};
-    \node[state, accepting, right of=s] (a) {$accept$};
-    \draw
-    (s) edge node[above] {\small $0^*1(00^*1)^*1\big((0\cup1)0^*1(00^*1)^*1\big)^*$} (a)
-    ;
-\end{tikzpicture}
-\end{center}
+              \begin{center}
+                  \begin{tikzpicture}[node distance=21em, ->]
+                      \node[state, initial] (s) {$start$};
+                      \node[state, accepting, right of=s] (a) {$accept$};
+                      \draw
+                      (s) edge node[above] {\small $0^*1(00^*1)^*1\big((0\cup1)0^*1(00^*1)^*1\big)^*$} (a)
+                      ;
+                  \end{tikzpicture}
+              \end{center}
 
-\textbf{Resulting regular expression:}
-\[
-0^*1(00^*1)^*1\big((0\cup1)0^*1(00^*1)^*1\big)^*
-\]
+              \textbf{Resulting regular expression:}
+              \[
+                  0^*1(00^*1)^*1\big((0\cup1)0^*1(00^*1)^*1\big)^*
+              \]
 
-\textbf{Sources:} Used Claude (Anthropic AI) to help work through the state-elimination steps and typeset this solution.
-\end{solution}
-\pagebreak
-    
-\item Convert the following NFA to an equivalent DFA, using the procedure from class. You do not have to draw unreachable or dead states.
+              \textbf{Sources:} Used Claude (Anthropic AI) to help work through the state-elimination steps and typeset this solution.
+          \end{solution}
+          \pagebreak
 
-\begin{tikzpicture}[node distance=7em]
-    \node[state, accepting, initial] (q0) {$q_0$};
-    \node[state, right of=q0] (q1) {$q_1$};
-    \node[state, below of=q0] (q2) {$q_2$};
-    \node[state, accepting, right of=q2] (q3) {$q_3$};
-    \draw (q0) edge[loop above] node [above ] {a,b} (q0)
-    (q0) edge[style = ->] node [above] {$\varepsilon$} (q1)
-    (q1) edge[loop above] node [above] {a} (q1)
-    (q1) edge[style = ->] node [right] {b} (q3)
-    (q2) edge[loop below] node [below] {a} (q3)
-    (q2) edge[style = ->] node [left] {b} (q0)
-    (q2) edge[bend left, style = ->] node [above] {a,b} (q3)
-    (q3) edge[bend left, style = ->] node [below] {b} (q2);
-\end{tikzpicture}
+    \item Convert the following NFA to an equivalent DFA, using the procedure from class. You do not have to draw unreachable or dead states.
 
-\pagebreak
+          \begin{tikzpicture}[node distance=7em]
+              \node[state, accepting, initial] (q0) {$q_0$};
+              \node[state, right of=q0] (q1) {$q_1$};
+              \node[state, below of=q0] (q2) {$q_2$};
+              \node[state, accepting, right of=q2] (q3) {$q_3$};
+              \draw (q0) edge[loop above] node [above ] {a,b} (q0)
+              (q0) edge[style = ->] node [above] {$\varepsilon$} (q1)
+              (q1) edge[loop above] node [above] {a} (q1)
+              (q1) edge[style = ->] node [right] {b} (q3)
+              (q2) edge[loop below] node [below] {a} (q3)
+              (q2) edge[style = ->] node [left] {b} (q0)
+              (q2) edge[bend left, style = ->] node [above] {a,b} (q3)
+              (q3) edge[bend left, style = ->] node [below] {b} (q2);
+          \end{tikzpicture}
 
-\item  Let $\Sigma = \{a,b,c\}$. Prove that the language 
-\[
-L_1 = \{c^la^mb^{n} \mid m \geq 2n, n \geq 1, l\geq 0\}
-\]
+          \begin{solution}
+              \textbf{Written by:} Chris Amey \newline
+              \newline
 
-is not regular using the Pumping Lemma. 
+              \begin{tikzpicture}[>=stealth', shorten >=1pt, auto,
+                      node distance=10em, scale=1,
+                      transform shape, align=center,
+                      state/.style={circle, draw, minimum size=2cm}]
+                  \node[state, accepting, initial] (q01) {$q_0, q_1$};
+                  \node[state, accepting, right of=q01] (q013) {$q_0, q_1, q_3$};
+                  \node[state, accepting, right of=q013] (q0123) {$q_0, q_1, q_2, q_3$};
 
+                  \draw
+                  (q01) edge[loop above] node [above ] {a} (q01)
+                  (q013) edge[loop above] node [above ] {a} (q013)
+                  (q0123) edge[loop above] node [above ] {a, b} (q0123)
 
-\textbf{For reference, here is the statement of the Pumping Lemma:}
+                  (q01) edge[style = ->] node [above] {$b$} (q013)
+                  (q013) edge[style = ->] node [above] {$b$} (q0123);
 
+              \end{tikzpicture}
 
-\textbf{Lemma} (Pumping Lemma):
-Let $L$ be a regular language. Then there exists some number $p$ (the ``pumping length'') such that the following holds:  
+              \vspace{0.5cm}
 
-Let $w$ be a string in $L$ where $|w| \geq p$. Then there exist substrings $x, y, z$ where $w = xyz$ and:
-\begin{enumerate}
-    \item For every $i \geq 0, xy^iz \in L$.
-    \item $|y| > 0$.
-    \item $|xy| \leq p$.
-\end{enumerate}
+              \textbf{Sources:} Two youtube videos were used for reference and as a refresher on conversions. They can be found \href{https://www.youtube.com/watch?v=jMxuL4Xzi_A}{here} and \href{https://www.youtube.com/watch?v=SCdsgVT6Ktw}{here}. No AI tools were used at any point in research, determining the solution, and writing the solution. 
+          \end{solution}
 
-\textbf{Give your proof that $L_1$ is not regular below.}
-(When referring to conditions 1-3 in your proof, you do not need to rewrite the statement of each condition. You can just say "conditions 1-3 hold" at the relevant place in your proof.)
+          \pagebreak
 
-\textbf{Proof}:
+    \item  Let $\Sigma = \{a,b,c\}$. Prove that the language
+          \[
+              L_1 = \{c^la^mb^{n} \mid m \geq 2n, n \geq 1, l\geq 0\}
+          \]
 
-\begin{solution}
-\textbf{Written by:} Robert Cruz-Diaz \newline
-\newline
-Suppose for a contradiction that $L_1$ is regular. \newline
-Then $\exists$ pumping length, $p$.\newline
-Let $w$ = $c^{0p} a^{2p} b^{p}$ => $w = a^{2p} b^{p}$. $w\in L_1$ $\And$ $|w| \geq p$
-
-Then by Pumping lemma, $w = xyz$ where
-\begin{enumerate}[label=(\arabic*)]
-    \item $\forall i \space \geq 0, \space xy^iz \space \in \space L$
-    \item $|y| \space > 0$
-    \item $|xy| \space \leq p$
-\end{enumerate}
-
-Let $w' = xy^0z \space => w' =xz$.\newline
-By (3), xy contains only $a$'s since $|xy| \leq p$ and that the first $p$ symbols of w are $a$'s. By (2), $y$ contains at least one $a$.\newline
-$\therefore\ w' = xz$ has fewer than $2p$ a's $\And$ still has $p\space b$'s. Hence $w' \notin L_1$, contradicting (1). \newline
-
-\textbf{Sources:} Went to Office hours. Did not need to use any AI tools to reach this solution. 
-\end{solution}
+          is not regular using the Pumping Lemma.
 
 
+          \textbf{For reference, here is the statement of the Pumping Lemma:}
 
 
-\pagebreak
+          \textbf{Lemma} (Pumping Lemma):
+          Let $L$ be a regular language. Then there exists some number $p$ (the ``pumping length'') such that the following holds:
 
-\item  Let $\Sigma = \{a, b, c\}$. Prove that the language 
-\begin{align*}
-L = \{a^mb^n \mid m \geq 2n, n \geq 0 \}
-\end{align*}
-is not regular, using one or more closure properties of regular languages and the fact that $L_1$ from the previous problem is not regular.
+          Let $w$ be a string in $L$ where $|w| \geq p$. Then there exist substrings $x, y, z$ where $w = xyz$ and:
+          \begin{enumerate}
+              \item For every $i \geq 0, xy^iz \in L$.
+              \item $|y| > 0$.
+              \item $|xy| \leq p$.
+          \end{enumerate}
 
-\emph{(Hint: you may need to use concatenation and find two additional regular languages, say $L_2$ and $L_3$.)}
+          \textbf{Give your proof that $L_1$ is not regular below.}
+          (When referring to conditions 1-3 in your proof, you do not need to rewrite the statement of each condition. You can just say "conditions 1-3 hold" at the relevant place in your proof.)
 
-\begin{solution}
-\textbf{Written by:} Omar Garcia
+          \textbf{Proof}:
 
-\medskip
-\begin{proof}
-Suppose for a contradiction that $L$ is regular.
+          \begin{solution}
+              \textbf{Written by:} Robert Cruz-Diaz \newline
+              \newline
+              Suppose for a contradiction that $L_1$ is regular. \newline
+              Then $\exists$ pumping length, $p$.\newline
+              Let $w$ = $c^{0p} a^{2p} b^{p}$ => $w = a^{2p} b^{p}$. $w\in L_1$ $\And$ $|w| \geq p$
 
-Let $L_1 = \{c^l a^m b^n \mid m \geq 2n,\ n \geq 1,\ l \geq 0\}$. 
-Let $L_2 = c^*$. 
-Let $L_3 = \Sigma^* b \Sigma^*$.
+              Then by Pumping lemma, $w = xyz$ where
+              \begin{enumerate}[label=(\arabic*)]
+                  \item $\forall i \space \geq 0, \space xy^iz \space \in \space L$
+                  \item $|y| \space > 0$
+                  \item $|xy| \space \leq p$
+              \end{enumerate}
 
-$$L_1 = L_3 \cap (L_2 \cdot L)$$
+              Let $w' = xy^0z \space => w' =xz$.\newline
+              By (3), xy contains only $a$'s since $|xy| \leq p$ and that the first $p$ symbols of w are $a$'s. By (2), $y$ contains at least one $a$.\newline
+              $\therefore\ w' = xz$ has fewer than $2p$ a's $\And$ still has $p\space b$'s. Hence $w' \notin L_1$, contradicting (1). \newline
 
-Looking at $L_1$, we see that in order to reach $L_1$, we are in need of 
-concatenating a string $c^l \in L_2$ that satisfies a form $c^l a^m b^n$. 
-By concatenating $L \cdot L_2$, we get:
-$$(L \cdot L_2) = \{c^l a^m b^n \mid m \geq 2n,\ n \geq 0,\ l \geq 0\}.$$
-In order to reach $L_1$, $n \geq 1$. Right now our string allows for $0$ 
-$b$'s, but $L_1$ says we need at least $1$ $b$. So intersecting with $L_3$ 
-gives us strings with at least $1$ $b$.
+              \textbf{Sources:} Went to Office hours. Did not need to use any AI tools to reach this solution.
+          \end{solution}
 
-Hence:
-$$L_3 \cap (L \cdot L_2) = \{c^l a^m b^n \mid m \geq 2n,\ l \geq 0,\ n \geq 1\} = L_1.$$
 
-We assumed $L$ is regular, $L_2$ is regular, and by closure under 
-concatenation, $L \cdot L_2$ is regular. $L_3$ is regular, and again by 
-closure under intersection, $L_3 \cap (L \cdot L_2)$ is regular. So $L_1$ 
-is regular.
 
-However, here we have a \textbf{contradiction}. We know from the previous 
-problem that $L_1$ is \textbf{NOT} regular. In the proof above, we claim 
-$L_1$ is regular. Thus we have a contradiction.
 
-Since assuming $L$ is regular led to $L_1$ being regular, which is false, 
-$L$ must not be regular.
-\end{proof}
+          \pagebreak
 
-\textbf{Sources:} Used lecture videos on youtube. No AI needed. 
-\end{solution}
+    \item  Let $\Sigma = \{a, b, c\}$. Prove that the language
+          \begin{align*}
+              L = \{a^mb^n \mid m \geq 2n, n \geq 0 \}
+          \end{align*}
+          is not regular, using one or more closure properties of regular languages and the fact that $L_1$ from the previous problem is not regular.
+
+          \emph{(Hint: you may need to use concatenation and find two additional regular languages, say $L_2$ and $L_3$.)}
+
+          \begin{solution}
+              \textbf{Written by:} Omar Garcia
+
+              \medskip
+              \begin{proof}
+                  Suppose for a contradiction that $L$ is regular.
+
+                  Let $L_1 = \{c^l a^m b^n \mid m \geq 2n,\ n \geq 1,\ l \geq 0\}$.
+                  Let $L_2 = c^*$.
+                  Let $L_3 = \Sigma^* b \Sigma^*$.
+
+                  $$L_1 = L_3 \cap (L_2 \cdot L)$$
+
+                  Looking at $L_1$, we see that in order to reach $L_1$, we are in need of
+                  concatenating a string $c^l \in L_2$ that satisfies a form $c^l a^m b^n$.
+                  By concatenating $L \cdot L_2$, we get:
+                  $$(L \cdot L_2) = \{c^l a^m b^n \mid m \geq 2n,\ n \geq 0,\ l \geq 0\}.$$
+                  In order to reach $L_1$, $n \geq 1$. Right now our string allows for $0$
+                  $b$'s, but $L_1$ says we need at least $1$ $b$. So intersecting with $L_3$
+                  gives us strings with at least $1$ $b$.
+
+                  Hence:
+                  $$L_3 \cap (L \cdot L_2) = \{c^l a^m b^n \mid m \geq 2n,\ l \geq 0,\ n \geq 1\} = L_1.$$
+
+                  We assumed $L$ is regular, $L_2$ is regular, and by closure under
+                  concatenation, $L \cdot L_2$ is regular. $L_3$ is regular, and again by
+                  closure under intersection, $L_3 \cap (L \cdot L_2)$ is regular. So $L_1$
+                  is regular.
+
+                  However, here we have a \textbf{contradiction}. We know from the previous
+                  problem that $L_1$ is \textbf{NOT} regular. In the proof above, we claim
+                  $L_1$ is regular. Thus we have a contradiction.
+
+                  Since assuming $L$ is regular led to $L_1$ being regular, which is false,
+                  $L$ must not be regular.
+              \end{proof}
+
+              \textbf{Sources:} Used lecture videos on youtube. No AI needed.
+          \end{solution}
 \end{enumerate}
 
 \end{document}
